@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/lib/DataTables/datatables.css" rel="stylesheet" />
+<link href="~/lib/jqueryui/themes/ui-lightness/jquery-ui.min.css" rel="stylesheet" />
+
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <div class="">
+            Manage
+        </div>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="align-content-end p-2">
+                <div class="d-flex">
+                    <div>
+
+                    </div>
+                    <div class="ml-auto">
+                        <a class="btn btn-outline-primary btn-sm" onclick="AddEditAgreement(0);">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            Add New Agreement
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet">
+                    <div class="portlet-title">
+
+                    </div>
+                    <div class="portlet-body">
+
+                        <table id="tblAgreementDataGrid">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>ProductId</th>
+                                    <th>ProductGroupID</th>
+                                    <th>EffectiveDate</th>
+                                    <th>ExpirationDate</th>
+                                    <th>ProductPrice</th>
+                                    <th>NewPrice</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+                <div class="ibox-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="text-center">
+
+</div>
+
+@section Scripts
+{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script src="~/lib/DataTables/datatables.js"></script>
+    <script src="~/lib/bootbox.min.js"></script>
+    <script src="~/js/views/product/agreement.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            LoadGrid();
+        });
+    </script>
+
+}

@@ -1,0 +1,59 @@
+﻿@model LoginViewModel
+
+@{
+    Layout = "_LayoutBlank";
+}
+
+
+<div class="container">
+    <div class="body d-md-flex align-items-center justify-content-between">
+        <div class="box-1 mt-md-0 mt-5">
+
+        </div>
+        <div class="box-2 d-flex flex-column h-200">
+            <div class="mt-100">
+                <div asp-validation-summary="All"></div>
+                <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                    <div class="form-group">
+                        <label asp-for="Email" class="col-form-label"></label>
+                        <div class="">
+                            <input asp-for="Email" class="form-control" type="text" />
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="col-form-label"></label>
+                        <div class="">
+                            <input asp-for="Password" class="form-control" type="password" />
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8 col-md-8 col-xs-8">
+                            <fieldset>
+                                <div class="checkbox checkbox-primary">
+                                    <input asp-for="RememberMe" type="checkbox" />
+                                    <label asp-for="RememberMe">
+                                        @Html.DisplayNameFor(m => m.RememberMe)
+                                    </label>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col-sm-4 col-xs-4 col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">Log In</button>
+                        </div>
+                    </div>
+
+
+
+                </form>
+
+            </div>
+            <div class="mt-auto">
+
+            </div>
+        </div>
+        <span class="fas fa-times"></span>
+    </div>
+</div>
