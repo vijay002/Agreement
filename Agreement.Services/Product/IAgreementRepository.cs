@@ -9,7 +9,7 @@ namespace Agreement.Services.Product
 {
     public interface IAgreementRepository : IRepository<Agreement.Domain.Product.Agreement>
     {
-        public List<Agreement.Domain.Product.Agreement> GetAllAgreement(int pageSize, int pageNumber, string orderby, string search);
+        public List<AgreementDto> GetAllAgreement(int pageSize, int pageNumber, string orderby, string search, out int totalrecords);
 
     }
 }

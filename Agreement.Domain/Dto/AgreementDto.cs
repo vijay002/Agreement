@@ -10,9 +10,9 @@ namespace Agreement.Domain.Dto
         public string UserId { get; set; }
 
         public int ProductId { get; set; }
-        public string Product { get; set; }
+        
         public int ProductGroupId { get; set; }
-        public string ProductGroup { get; set; }
+        
 
         public DateTime EffectiveDate { get; set; }
         public DateTime ExpirationDate { get; set; }
@@ -21,10 +21,11 @@ namespace Agreement.Domain.Dto
 
         public bool IsActive { get; set; }
 
-        
+        public string Product { get; set; }
+        public string ProductGroup { get; set; }
         public int TotalRow { get; set; }
         
-        public int RowNum { get; set; }
+        public long RowNum { get; set; }
 
     }
 }

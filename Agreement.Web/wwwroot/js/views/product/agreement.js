@@ -7,17 +7,15 @@ function LoadGrid()
     $(grid_selector).DataTable({
         "bProcessing": true,
         "bServerSide": true,
+        "iDisplayLength": 10,
+        "sPaginationType": "numbers",
         "lengthMenu": [
-            [5, 10, 25, 50, 100],
+            [5,10, 25, 50, 100],
             [5, 10, 25, 50, 100]
         ],
         "sAjaxSource": "/home/LoadData",
         "fnServerData": function (sSource, aoData, fnCallback) {
-            //aoData.push({ "name": "more_data", "value": "my_value" });
-            //$.getJSON(sSource, aoData, function (json) {
-            //    /* Do whatever additional processing you want on the callback, then tell DataTables */
-            //    fnCallback(json)
-            //});
+            
             $.ajax({
                 'dataType': 'json',
                 'type': 'POST',
@@ -28,8 +26,6 @@ function LoadGrid()
                 },
             });
 
-
-
         },
         "aoColumns": [
             {
@@ -39,8 +35,8 @@ function LoadGrid()
                 "bVisible": false
 
             },
-            { "sName": "ProductId" },
-            { "sName": "ProductGroupId" },
+            { "sName": "Product" },
+            { "sName": "ProductGroup" },
             {
                 "sName": "EffectiveDate",
                 "sClass": "center",
@@ -62,17 +58,19 @@ function LoadGrid()
                 "sClass": "center",
                 "bSortable": true
             },
+
             {
-                "bSortable": false,
-                "sClass": "center",
-                "sWidth": "10%",
-                "render": function (data, type, row, meta) {
-                    var buttons = "";
-                    buttons = '<center>';
-                    buttons += '&nbsp;<i  data-modal="" id="btnDelete" name="btnAction" style="cursor:pointer;" Title="Delete Record" class="fa fa-trash-o" onClick="DeleteRecord(' + row[0] + ')"></i></center>';
-                    return buttons;
+               
+
+                "mRender": function (data, type, full) {
+                    return '<a class="btn btn-info btn-sm" href=#/' + full[0] + ' onclick = "AddEditAgreement(' + full[0]  + ');">' + 'Edit' + '</a>'
+                        + '&nbsp;<a class="btn btn-danger btn-sm" href=#/' + full[0] + ' onclick="DeleteRecord(' + full[0]  + ');" >' + 'Delete' + '</a>';
                 }
             }
+
+           
+
+
         ]
     });
 
@@ -83,7 +81,7 @@ function LoadGrid()
 function DeleteRecord(id) {
     if (confirm("Confim to delete ?")) {
 
-        $.post("/agreement/delete?id=" + id, function (data, status) {
+        $.post("/home/delete?id=" + id, function (data, status) {
             if (data.success) {
                 $(grid_selector).DataTable().ajax.reload();
             } else {
@@ -111,7 +109,11 @@ function AddEditAgreement(id) {
                             label: "Save",
                             className: 'btn btn-primary btn-md',
                             callback: function () {
-                                SaveAgreement();
+                                var formIsValid = $("#frmAgreement").valid();
+                                if (!formIsValid)
+                                    return false;
+                                else 
+                                     SaveAgreement();
                             }
                         },
                         "Cancel": {
@@ -149,8 +151,12 @@ function SaveAgreement() {
             }
             else {
                 //ErrorMessage(data.message);
+                
             }
         });
+    }
+    else {
+        return false;
     }
 }
 

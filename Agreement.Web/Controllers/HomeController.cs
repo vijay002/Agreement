@@ -55,19 +55,18 @@ namespace Agreement.Web.Controllers
         {
             try
             {
-                var sortColumnIndex = 0; //_httpContextAccessor.HttpContext.Request["iSortCol_0"];
+                var sortColumnIndex = _httpContext.Request.Form["iSortCol_0"];
                 int StartIndex = param.iDisplayStart + 1;
                 int EndIndex = param.iDisplayStart + param.iDisplayLength;
 
                 string strWhere = string.Empty;
                 string strSortOrder = string.Empty;
-                string sortColumnName = ""; // Convert.ToString(_httpContext.Request["sColumns"].Split(',')[sortColumnIndex]);
-                string sortDirection = "";// Convert.ToString(_httpContext.Request["sSortDir_0"]);
+                string sortColumnName = "";// Convert.ToString(_httpContext.Request.Form["sColumns"][0]).ToString().Split(',')[sortColumnIndex]);
+                string sortDirection = Convert.ToString(_httpContext.Request.Form["sSortDir_0"]);
 
-                var agreementList = _unitOfWork.AgreementRepository.GetAllAgreement(StartIndex, EndIndex, strSortOrder, strWhere);
-                int? totalRecords = agreementList.Count();
-
-
+                int totalRecords = 0;
+                var agreementList = _unitOfWork.AgreementRepository.GetAllAgreement(StartIndex, EndIndex, strSortOrder, strWhere, out totalRecords);
+                
                 var arrydata = (from c in agreementList
                                 select new object[]
                                 {
@@ -78,8 +77,7 @@ namespace Agreement.Web.Controllers
                                     c.ExpirationDate,
                                     c.ProductPrice,
                                     c.NewPrice,
-                                    TableHelper.HTMLActionString(Convert.ToInt32(c.Id), "Edit", "Edit Record", "fa fa-pencil-square Edit" + c.Id.ToString(), "EditDetail(" + c.Id.ToString() + ");", "", false,"")
-                                    + " " + TableHelper.HTMLActionString(Convert.ToInt32(c.Id), "Delete", "Delete Record", "fa fa-trash Delete" + c.Id.ToString(), "DeleteRecord(" + c.Id + ");","", false,"")
+                                    null
                                 });
 
 
@@ -111,11 +109,11 @@ namespace Agreement.Web.Controllers
 
             model.ProductList = new List<SelectListItem>();
 
-            //model.ProductList = _unitOfWork.ProductRepository.FindBy(x=> x.IsActive == true).OrderBy(m => m.ProductDescription).Select(a => new SelectListItem()
-            //{
-            //    Value = a.Id.ToString(),
-            //    Text = a.ProductDescription
-            //}).ToList();
+            model.ProductList = _unitOfWork.ProductRepository.FindBy(x => x.IsActive == true).OrderBy(m => m.ProductDescription).Select(a => new SelectListItem()
+            {
+                Value = a.Id.ToString(),
+                Text = a.ProductDescription
+            }).ToList();
 
             model.ProductGroupList = _unitOfWork.ProductGroupRepository.GetAll().OrderBy(m => m.GroupDescription).Select(a => new SelectListItem()
             {
@@ -155,8 +153,9 @@ namespace Agreement.Web.Controllers
 
 
                 var entity = _unitOfWork.AgreementRepository.FindBy(q => q.Id == viewmodel.Id).FirstOrDefault();
-                if (entity != null)
-                {
+                if (entity == null)
+                    entity = new Domain.Product.Agreement();
+
                     entity.Id = viewmodel.Id;
                     entity.IsActive = viewmodel.IsActive;
                     entity.NewPrice = viewmodel.NewPrice;
@@ -178,7 +177,7 @@ namespace Agreement.Web.Controllers
                     _unitOfWork.AgreementRepository.Commit();
 
                     return Json(new { success = true, message = String.Format("Success_save", "Agreement") });
-                }
+                
             }
             return Json(new { success = false, message = String.Format("Message_Error", "Agreement") });
         }

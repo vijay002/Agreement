@@ -1,4 +1,5 @@
 ﻿using Agreement.Domain.Account;
+using Agreement.Domain.Dto;
 using Agreement.Domain.Product;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,10 @@ namespace Agreement.Domain
         public DbSet<Agreement.Domain.Product.Product> Products { get; set; }
 
         public DbSet<Domain.Product.Agreement> Agreements { get; set; }
+
+        public DbSet<AgreementDto> AgreementList { get; set; }
+        
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
                 : base(options)
@@ -40,7 +45,7 @@ namespace Agreement.Domain
 
             builder.Entity<Domain.Product.Agreement>().HasKey(c => new { c.Id });
 
-
+            builder.Entity<AgreementDto>().HasNoKey();
 
         }
 

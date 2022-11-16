@@ -18,5 +18,8 @@ namespace Agreement.Domain.Product
 
         public bool IsActive { get; set; }
 
+
+
+        //public ICollection<Product> Products { get; set; }
     }
 }

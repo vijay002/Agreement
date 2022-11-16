@@ -42,9 +42,9 @@
 
                             <li class="nav-item">
                                 <form class="form-inline"
-                                      asp-action="logout" asp-controller="account"
-                                      asp-route-returnUrl="@Url.Page("/", new { area = "" })"
-                                      method="post">
+                                      asp-action="Logout" asp-controller="account"
+                                      asp-route-returnUrl="@Url.Page("/home/index", new { area = "" })"
+                                      method="get">
                                     <button type="submit" class="nav-link btn btn-link text-dark">Log out</button>
                                 </form>
                             </li>

@@ -12,5 +12,7 @@ namespace Agreement.Services.Product
            : base(respositoryContext)
         {
         }
+
+       
     }
 }

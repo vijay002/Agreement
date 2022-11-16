@@ -91,6 +91,7 @@ namespace Agreement.Web
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            services.AddHttpContextAccessor();
             services.AddMvc();
 
         }
