@@ -71,8 +71,8 @@ namespace Agreement.Web.Controllers
                                 select new object[]
                                 {
                                     c.Id,
-                                    c.ProductId,
-                                    c.ProductGroupId,
+                                    c.Product,
+                                    c.ProductGroup,
                                     c.EffectiveDate,
                                     c.ExpirationDate,
                                     c.ProductPrice,

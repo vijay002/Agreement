@@ -8,7 +8,7 @@ function LoadGrid()
         "bProcessing": true,
         "bServerSide": true,
         "iDisplayLength": 10,
-        "sPaginationType": "numbers",
+        "sPaginationType": "full_numbers",
         "lengthMenu": [
             [5,10, 25, 50, 100],
             [5, 10, 25, 50, 100]
