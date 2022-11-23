@@ -1,4 +1,5 @@
 ﻿using Agreement.Domain.Account;
+using Agreement.Domain.Base;
 using Agreement.Domain.Dto;
 using Agreement.Domain.Product;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -7,7 +8,7 @@ using System;
 
 namespace Agreement.Domain
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+    public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public virtual DbSet<Account.ApplicationUser> ApplicationUsers { get; set; }
         public virtual DbSet<Account.ApplicationRole> ApplicationRoles { get; set; }
@@ -17,8 +18,8 @@ namespace Agreement.Domain
         public DbSet<Domain.Product.Agreement> Agreements { get; set; }
 
         public DbSet<AgreementDto> AgreementList { get; set; }
-        
 
+        public virtual DbSet<SP_Execute> JsonResult { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
                 : base(options)
@@ -29,6 +30,8 @@ namespace Agreement.Domain
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            //Initalize store procedure
+            builder.Entity<SP_Execute>(entity =>{ entity.HasNoKey(); });
 
             builder.Entity<ApplicationUser>().HasMany(u => u.Roles).WithOne().HasForeignKey(r => r.UserId).IsRequired().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ApplicationRole>().HasMany(r => r.Users).WithOne().HasForeignKey(r => r.RoleId).IsRequired().OnDelete(DeleteBehavior.Cascade);

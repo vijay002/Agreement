@@ -1,6 +1,7 @@
 ﻿using Agreement.Domain;
 using Agreement.Services.Account;
 using Agreement.Services.Product;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace Agreement.Services
@@ -23,7 +24,10 @@ namespace Agreement.Services
             this._dbContext = dbContext;
         }
 
-
+        public DbContext Db
+        {
+            get { return _dbContext; }
+        }
 
         public IUserRepository UserRepository
         {

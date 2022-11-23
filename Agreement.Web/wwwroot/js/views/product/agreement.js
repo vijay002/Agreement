@@ -29,10 +29,11 @@ function LoadGrid()
         },
         "aoColumns": [
             {
-                "sName": "Id",
+                "sName": "Agreement.Id",
                 "bSearchable": false,
                 "bSortable": false,
                 "bVisible": false
+                
 
             },
             { "sName": "Product" },

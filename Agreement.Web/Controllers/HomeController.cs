@@ -55,14 +55,29 @@ namespace Agreement.Web.Controllers
         {
             try
             {
-                var sortColumnIndex = _httpContext.Request.Form["iSortCol_0"];
+                var sortColumnIndex = Convert.ToInt32(_httpContext.Request.Form["iSortCol_0"]);
                 int StartIndex = param.iDisplayStart + 1;
                 int EndIndex = param.iDisplayStart + param.iDisplayLength;
 
                 string strWhere = string.Empty;
                 string strSortOrder = string.Empty;
-                string sortColumnName = "";// Convert.ToString(_httpContext.Request.Form["sColumns"][0]).ToString().Split(',')[sortColumnIndex]);
+                string sortColumnName = Convert.ToString(_httpContext.Request.Form["sColumns"].FirstOrDefault().Split(",")[sortColumnIndex]);
+                    ;// Convert.ToString(_httpContext.Request.Form["sColumns"][0]).ToString().Split(',')[sortColumnIndex]);
                 string sortDirection = Convert.ToString(_httpContext.Request.Form["sSortDir_0"]);
+                strSortOrder =  sortColumnName + " " + sortDirection;
+                
+                strWhere += "1=1 ";
+                string[] columnName = { "Agreement.Id", "Product.ProductNumber", "ProductGroup.GroupCode" };
+                if (!string.IsNullOrEmpty(param.sSearch))
+                {
+                    strWhere += columnName.MakeDatatableSearchCondition(param.sSearch);
+                }
+                else
+                {
+                   // strWhere += Manager.MakeDatatableForSearch(param.SearchFilter);
+                }
+                
+
 
                 int totalRecords = 0;
                 var agreementList = _unitOfWork.AgreementRepository.GetAllAgreement(StartIndex, EndIndex, strSortOrder, strWhere, out totalRecords);
@@ -85,7 +100,7 @@ namespace Agreement.Web.Controllers
                 return Json(new
                 {
                     sEcho = param.sEcho,
-                    iTotalDisplayRecords = totalRecords != null && totalRecords > 0 ? totalRecords : 0,
+                    iTotalDisplayRecords = agreementList != null && agreementList.Count() > 0 ? agreementList.Count() : 0,
                     iTotalRecords = totalRecords != null && totalRecords > 0 ? totalRecords : 0,
                     aaData = arrydata,
                     strSortOrder = strSortOrder,
