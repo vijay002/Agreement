@@ -7,6 +7,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
+                    credentialsId: 'git-creds',
                     url: 'https://github.com/vijay002/Agreement.Web.git'
             }
         }
