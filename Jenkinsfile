@@ -20,7 +20,7 @@ pipeline {
 
         stage('Restore NuGet') {
             steps {
-                bat 'nuget restore %SOLUTION%'
+                bat '"C:\\nuget\\nuget.exe" restore %SOLUTION%'
             }
         }
 
