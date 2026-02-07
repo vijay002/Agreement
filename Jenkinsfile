@@ -7,7 +7,7 @@ pipeline {
         BUILD_DIR = 'publish'
         IIS_SITE = 'AgreementWeb'
         PUBLISH_PATH = 'C:\\inetpub\\AgreementWeb'
-        MSBUILD = '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe"'
+        MSBUILD='"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe"'
     }
 
     stages {
